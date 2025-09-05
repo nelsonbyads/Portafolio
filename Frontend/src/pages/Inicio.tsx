@@ -1,0 +1,97 @@
+import { useEffect, useMemo, useState } from "react";
+import { whatsappLink } from "../lib/utils";
+import Button from "../components/ui/Button";
+import Badge from "../components/ui/Badge";
+import Card from "../components/ui/Card";
+import PRODUCTS from "../data/products";
+import "./inicio.css";
+
+const SLOGANS = [
+  "Encendé tu ritual de calma",
+  "Diseñadas para el momento perfecto",
+  "Aromas que abrazan tu espacio",
+  "Regala presencia, regala Luz de Nuit",
+  "Bienestar en cada chispa",
+];
+
+export default function InicioPage({ goto }: { goto: (r: string) => void }) {
+  const [sloganIndex, setSloganIndex] = useState(0);
+  const promotions = useMemo(() => PRODUCTS.filter((p) => p.promo), []);
+
+  useEffect(() => {
+    const t = setInterval(() => setSloganIndex((i) => (i + 1) % SLOGANS.length), 3800);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <>
+      <section className="relative">
+        <div className="absolute inset-0 -z-10 inicio-hero-bg" />
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-8 px-4 py-8 sm:py-12 md:py-14 md:grid-cols-2 lg:gap-10">
+          <div className="text-center md:text-left">
+            <Badge tone="accent" className="mb-4">Nuevo • Portafolio Digital</Badge>
+            <h1 className="mb-4 text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
+              Velas artesanales para
+              <span className="ml-1 sm:ml-2 rounded-xl px-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl bg-brand-accent text-brand-secondary">momentos memorables</span>
+            </h1>
+            <p className="mb-4 sm:mb-6 max-w-prose text-base sm:text-lg opacity-90 mx-auto md:mx-0">
+              En Luz de Nuit creamos velas con propósito: bienestar, belleza y aroma natural en piezas minimalistas. Encendé la calma y transformá tu espacio.
+            </p>
+            <p className="h-6 text-sm opacity-80">{SLOGANS[sloganIndex]}</p>
+            <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
+              <Button onClick={() => goto('catalogo')} variant="ghost" className="w-full sm:w-auto">Ver catálogo</Button>
+              <Button href={whatsappLink("Hola, quiero comprar una vela ✨")} className="w-full sm:w-auto">Comprar ahora</Button>
+            </div>
+          </div>
+          <div className="relative order-first md:order-last">
+            <div className="mx-auto aspect-[4/3] w-full max-w-sm sm:max-w-md md:max-w-lg rounded-2xl sm:rounded-3xl border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-3 sm:p-4 shadow-lg dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-950">
+              <div className="flex h-full items-center justify-center rounded-2xl bg-brand-primary-soft">
+                <div className="grid grid-cols-3 gap-3">
+                  {PRODUCTS.slice(0, 3).map((p) => (
+                    <div
+                      key={p.id}
+                      className="h-24 w-20 md:h-32 md:w-28 rounded-2xl border border-zinc-200 shadow-sm dark:border-zinc-800 product-swatch"
+                      style={{ ['--product-color' as any]: p.color || '#eee' }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-4 left-6"><Badge tone="primary">Aromaterapia natural</Badge></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-8 sm:py-10">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Promociones</h2>
+            <div className="h-[2px] w-12 mt-2 rounded-full bg-brand-accent"/>
+          </div>
+          <span className="text-xs sm:text-sm opacity-70">Válidas por tiempo limitado</span>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {promotions.map((p) => (
+            <Card key={p.id} className="overflow-hidden">
+              <div className="h-40 w-full product-swatch" style={{ ['--product-color' as any]: p.color || '#eee' }} />
+              <div className="p-5">
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">{p.name}</h3>
+                  <Badge tone="primary">{p.promo!.label}</Badge>
+                </div>
+                {p.promo?.until && (
+                  <p className="text-xs opacity-70 mb-2">Hasta {new Date(p.promo.until).toLocaleDateString("es-CO")}</p>
+                )}
+                <p className="mb-3 text-sm opacity-85 line-clamp-2">{p.description}</p>
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold text-brand-primary">{/* precio promo visual solo */}</div>
+                  <Button href={whatsappLink(`Hola, me interesa la promo de ${p.name}`)} size="md">Lo quiero</Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+    </>
+  );
+}

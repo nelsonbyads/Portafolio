@@ -1,0 +1,105 @@
+import { Product } from "../lib/utils";
+
+// Copiado desde App.tsx original, resumido aquí por modularidad
+export const PRODUCTS: Product[] = [
+  {
+    id: "vela-lavanda",
+    name: "Vela de Lavanda Provenzal",
+    slug: "vela-lavanda",
+    type: "Aromaterapia",
+    price: 48000,
+    capacityMl: 220,
+    burnTimeHours: 35,
+    scentNotes: ["lavanda fresca", "hierbas suaves", "toque floral"],
+    description:
+      "Nuestra lavanda provenzal calma la mente y suaviza el ambiente. Elaborada con cera vegetal, mecha de algodón y aceites esenciales de grado terapéutico, es la compañera ideal para tu ritual nocturno de descanso.",
+    ingredients: ["cera de soya", "aceite esencial de lavanda", "mecha de algodón"],
+    isNatural: true,
+    tags: ["relajación", "noches tranquilas", "aromaterapia"],
+    color: "#D6D6FF",
+    promo: { label: "-10% Semana Zen", discountPercent: 10, until: "2025-09-15" },
+  },
+  {
+    id: "vela-vainilla",
+    name: "Vela de Vainilla Bourbon",
+    slug: "vela-vainilla",
+    type: "Decorativa",
+    price: 52000,
+    capacityMl: 240,
+    burnTimeHours: 40,
+    scentNotes: ["vainilla cremosa", "azúcar morena", "madera suave"],
+    description:
+      "Cálida y envolvente, esta vela viste tus espacios con un aroma dulce y elegante. Perfecta para crear atmósferas acogedoras y celebrar momentos en casa.",
+    ingredients: ["cera de soya", "fragancia grado cosmético", "mecha de algodón"],
+    tags: ["hogar", "acogedor", "decoración"],
+    color: "#FFE8C8",
+  },
+  {
+    id: "vela-citronela",
+    name: "Vela de Citronela al Aire Libre",
+    slug: "vela-citronela",
+    type: "Aromaterapia",
+    price: 45000,
+    capacityMl: 200,
+    burnTimeHours: 30,
+    scentNotes: ["cítrica", "limpia", "herbal"],
+    description:
+      "Refresca terrazas y balcones con notas cítricas de citronela 100% natural. Ideal para reuniones al atardecer y cenas al aire libre.",
+    ingredients: ["cera de soya", "aceite esencial de citronela", "mecha de algodón"],
+    isNatural: true,
+    tags: ["exterior", "cenas", "cítrica"],
+    color: "#E6FFCF",
+    promo: { label: "2x1 Terraza Feliz", discountPercent: 50 },
+  },
+  {
+    id: "vela-masaje-ylang",
+    name: "Vela de Masaje Ylang-Ylang & Coco",
+    slug: "vela-masaje-ylang",
+    type: "Masaje",
+    price: 68000,
+    capacityMl: 180,
+    burnTimeHours: 28,
+    scentNotes: ["floral exótico", "coco suave", "vainilla ligera"],
+    description:
+      "Funde, apaga y masajea: una mezcla sedosa de manteca de karité, aceite de coco y ylang-ylang pensada para nutrir tu piel y relajar el cuerpo.",
+    ingredients: ["cera de soya", "manteca de karité", "aceite de coco", "aceite esencial ylang-ylang"],
+    isMassageSafe: true,
+    tags: ["relajación", "cuidado personal", "bienestar"],
+    color: "#FFE6EF",
+  },
+  {
+    id: "vela-personalizada",
+    name: "Vela Personalizada (Aroma & Etiqueta)",
+    slug: "vela-personalizada",
+    type: "Personalizada",
+    price: 75000,
+    capacityMl: 250,
+    burnTimeHours: 42,
+    scentNotes: ["elige tu aroma", "tu dedicatoria", "empaque de regalo"],
+    description:
+      "Crea el detalle perfecto: elige aroma, color de cera y personaliza la etiqueta con nombre, fecha o mensaje especial. Ideal para regalos corporativos, bodas y cumpleaños.",
+    ingredients: ["cera de soya", "aceites/aromas a elección", "mecha de algodón"],
+    tags: ["regalos", "eventos", "personalización"],
+    color: "#E7F0FF",
+    promo: { label: "-15% Packs Corporativos", discountPercent: 15, until: "2025-10-01" },
+  },
+  {
+    id: "vela-eucalipto-menta",
+    name: "Vela Eucalipto & Menta Respira",
+    slug: "vela-eucalipto-menta",
+    type: "Aromaterapia",
+    price: 50000,
+    capacityMl: 220,
+    burnTimeHours: 36,
+    scentNotes: ["mentolada", "fresca", "claridad"],
+    description:
+      "Despeja y revitaliza. Eucalipto y menta para cuando necesitas foco, respiración profunda y un ambiente purificado.",
+    ingredients: ["cera de soya", "aceite esencial de eucalipto", "aceite esencial de menta"],
+    isNatural: true,
+    tags: ["claridad", "foco", "pureza"],
+    color: "#E0FFF7",
+  },
+];
+
+export default PRODUCTS;
+

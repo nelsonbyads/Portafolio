@@ -1,0 +1,13 @@
+.catalogo-page {
+  /* espacio para estilos propios del catálogo si los necesitas */
+}
+
+/* Product image background using CSS variable */
+.product-image {
+  background: var(--product-color, #eee);
+}
+
+/* Optional: smoother only-once movement constraints */
+.group:hover .product-image {
+  will-change: transform;
+}

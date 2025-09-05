@@ -1,0 +1,13 @@
+.inicio-hero {}
+
+/* Hero background gradient using brand vars */
+.inicio-hero-bg {
+  background:
+    radial-gradient(1200px 400px at 20% 0%, rgba(var(--brand-accent-rgb), 0.125), transparent 50%),
+    radial-gradient(800px 300px at 100% 20%, rgba(var(--brand-primary-rgb), 0.125), transparent 60%);
+}
+
+/* Product swatch and image backgrounds using CSS variable */
+.product-swatch {
+  background: var(--product-color, #eee);
+}

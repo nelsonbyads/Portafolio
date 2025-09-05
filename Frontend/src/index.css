@@ -8,8 +8,17 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #111827;
+  background-color: #FAFAFA;
+
+  /* Brand variables */
+  --brand-primary: #E77764;
+  --brand-secondary: #141414;
+  --brand-accent: #EFD89A;
+  /* RGB for alpha usage */
+  --brand-primary-rgb: 231, 119, 100;
+  --brand-secondary-rgb: 20, 20, 20;
+  --brand-accent-rgb: 239, 216, 154;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,17 +38,16 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: #FAFAFA; /* evita bordes negros fuera del app wrapper */
 }
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: initial;
 }
 
 .logo {
@@ -92,3 +100,29 @@ body {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/* App background theming using brand variables */
+.app-root {
+  background-color: #FAFAFA;
+  color: #111827;
+  background-image:
+    radial-gradient(1200px 500px at 10% 0%, rgba(var(--brand-accent-rgb), 0.094), transparent 60%),
+    radial-gradient(800px 300px at 100% 20%, rgba(var(--brand-primary-rgb), 0.063), transparent 70%);
+}
+
+html.dark .app-root {
+  background-color: var(--brand-secondary);
+  color: #F4F4F5;
+  background-image:
+    radial-gradient(1200px 500px at 10% 0%, rgba(var(--brand-primary-rgb), 0.082), transparent 60%),
+    radial-gradient(800px 300px at 100% 20%, rgba(var(--brand-accent-rgb), 0.063), transparent 70%);
+}
+
+/* Brand utility classes */
+.bg-brand-primary { background-color: var(--brand-primary) !important; }
+.bg-brand-accent { background-color: var(--brand-accent) !important; }
+.text-brand-primary { color: var(--brand-primary) !important; }
+.text-brand-secondary { color: var(--brand-secondary) !important; }
+
+/* Soft background using primary with low opacity */
+.bg-brand-primary-soft { background-color: rgba(var(--brand-primary-rgb), 0.082) !important; }
