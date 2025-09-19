@@ -1,2 +1,97 @@
-.beneficios-page {}
+.beneficios-page {
+  /* Animaciones personalizadas */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Aplicar animaciones a los elementos */
+  .benefit-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+  .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+  .benefit-card:nth-child(3) { animation-delay: 0.3s; }
+  .benefit-card:nth-child(4) { animation-delay: 0.4s; }
+  .benefit-card:nth-child(5) { animation-delay: 0.5s; }
+  .benefit-card:nth-child(6) { animation-delay: 0.6s; }
+
+  .floating-icon {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .pulse-icon {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Efectos de hover mejorados */
+  .benefit-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Gradientes de fondo sutiles */
+  .benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .benefit-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Estilos para la sección destacada */
+  .feature-section {
+    background: linear-gradient(135deg, 
+      rgba(var(--brand-primary-rgb), 0.05) 0%, 
+      rgba(var(--brand-accent-rgb), 0.05) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Responsive improvements */
+  @media (max-width: 768px) {
+    .benefit-card {
+      padding: 1.5rem;
+    }
+    
+    .benefit-card:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+  }
+}
 
