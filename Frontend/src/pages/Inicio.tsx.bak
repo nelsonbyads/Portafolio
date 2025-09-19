@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { whatsappLink, formatCurrency } from "../lib/utils";
+import { whatsappLink } from "../lib/utils";
 import Button from "../components/ui/Button";
 import Badge from "../components/ui/Badge";
 import Card from "../components/ui/Card";
@@ -7,7 +7,6 @@ import PRODUCTS from "../data/products";
 import Carousel from "../components/ui/Carousel";
 import "./inicio.css";
 import TestimoniosPage from "./Testimonios";
-import { Link } from "react-router-dom";
 
 const SLOGANS = [
   "Encendé tu ritual de calma",
@@ -75,34 +74,20 @@ export default function InicioPage({ goto }: { goto: (r: string) => void }) {
         </div>
         <Carousel>
           {promotions.map((p) => (
-            <Card key={p.id} className="group overflow-hidden flex flex-col transition-shadow hover:shadow-md h-[420px] md:h-[460px]">
-              <div className="product-image relative w-full overflow-hidden h-44 md:h-56" style={{ ['--product-color' as any]: p.color || '#eee' }}>
-                {p.promo && (
-                  <div className="absolute left-3 top-3 z-10"><Badge tone="primary">{p.promo.label}</Badge></div>
+            <Card key={p.id} className="overflow-hidden">
+              <div className="h-40 w-full product-swatch" style={{ ['--product-color' as any]: p.color || '#eee' }} />
+              <div className="p-5">
+                <div className="mb-2 flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">{p.name}</h3>
+                  <Badge tone="primary">{p.promo!.label}</Badge>
+                </div>
+                {p.promo?.until && (
+                  <p className="text-xs opacity-70 mb-2">Hasta {new Date(p.promo.until).toLocaleDateString("es-CO")}</p>
                 )}
-              </div>
-              <div className="relative p-5 flex flex-col h-full flex-1 overflow-hidden pb-16">
-                <div className="mb-2 flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-lg font-semibold leading-tight">{p.name}</h3>
-                    <p className="text-xs opacity-60">{p.type} • {p.capacityMl} ml • {p.burnTimeHours} h</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm line-through opacity-40">{p.promo ? formatCurrency(p.price) : "\u00A0"}</p>
-                    <p className="text-base font-bold text-brand-primary">
-                      {p.promo ? formatCurrency(Math.round(p.price * (1 - (p.promo.discountPercent || 0) / 100))) : formatCurrency(p.price)}
-                    </p>
-                  </div>
-                </div>
-                <p className="mb-3 line-clamp-3 text-sm opacity-85">{p.description}</p>
-                <div className="mb-3 flex flex-wrap gap-2">
-                  {p.scentNotes.slice(0, 3).map((n) => (
-                    <Badge key={n} tone="neutral">{n}</Badge>
-                  ))}
-                </div>
-                <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+                <p className="mb-3 text-sm opacity-85 line-clamp-2">{p.description}</p>
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-semibold text-brand-primary">{/* precio promo visual solo */}</div>
                   <Button href={whatsappLink(`Hola, me interesa la promo de ${p.name}`)} size="md">Lo quiero</Button>
-                  <Link to={`/catalogo/${p.slug}`} className="text-sm opacity-70 underline-offset-4 hover:underline">Detalles</Link>
                 </div>
               </div>
             </Card>
@@ -115,3 +100,4 @@ export default function InicioPage({ goto }: { goto: (r: string) => void }) {
     </>
   );
 }
+

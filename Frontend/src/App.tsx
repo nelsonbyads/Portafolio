@@ -8,14 +8,13 @@ import { Routes, Route, NavLink, useLocation, useNavigate } from "react-router-d
 import InicioPage from "./pages/Inicio";
 import CatalogoPage from "./pages/Catalogo";
 import BeneficiosPage from "./pages/Beneficios";
-import TestimoniosPage from "./pages/Testimonios";
 import HistoriaPage from "./pages/Historia";
 import ProductDetailPage from "./pages/ProductDetail";
 
 /**
  * App (modular)
  * - Header con navegación y toggle de tema
- * - Router por hash: #/inicio, #/catalogo, #/beneficios, #/testimonios, #/historia
+ * - Router por hash: #/inicio, #/catalogo, #/beneficios, #/historia
  * - Páginas separadas en src/pages
  * - Footer consistente y botón flotante de WhatsApp
  */
@@ -39,11 +38,11 @@ export default function App() {
   }, [dark]);
 
   const path = location.pathname || "/";
-  const routeActive = (key: 'inicio'|'catalogo'|'beneficios'|'testimonios'|'historia') => {
+  const routeActive = (key: 'inicio'|'catalogo'|'beneficios'|'historia') => {
     if (key === 'inicio') return path === '/' || path === '';
     return path.startsWith('/' + key);
   };
-  const goto = (r: 'inicio'|'catalogo'|'beneficios'|'testimonios'|'historia') => {
+  const goto = (r: 'inicio'|'catalogo'|'beneficios'|'historia') => {
     navigate(r === 'inicio' ? '/' : `/${r}`);
   };
 
@@ -67,7 +66,6 @@ export default function App() {
             <NavLink to="/" className={({isActive}) => cn("opacity-80 hover:opacity-100 transition-opacity", (isActive) && "underline underline-offset-4")}>Inicio</NavLink>
             <NavLink to="/catalogo" className={({isActive}) => cn("opacity-80 hover:opacity-100 transition-opacity", (isActive) && "underline underline-offset-4")}>Catálogo</NavLink>
             <NavLink to="/beneficios" className={({isActive}) => cn("opacity-80 hover:opacity-100 transition-opacity", (isActive) && "underline underline-offset-4")}>Beneficios</NavLink>
-            <NavLink to="/testimonios" className={({isActive}) => cn("opacity-80 hover:opacity-100 transition-opacity", (isActive) && "underline underline-offset-4")}>Testimonios</NavLink>
             <NavLink to="/historia" className={({isActive}) => cn("opacity-80 hover:opacity-100 transition-opacity", (isActive) && "underline underline-offset-4")}>Historia</NavLink>
           </nav>
 
@@ -116,7 +114,6 @@ export default function App() {
                 <button onClick={() => { goto('inicio'); setMobileMenuOpen(false); }} className={cn("block w-full text-left py-2 px-3 rounded-lg transition-colors", routeActive('inicio') ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800")}>Inicio</button>
                 <button onClick={() => { goto('catalogo'); setMobileMenuOpen(false); }} className={cn("block w-full text-left py-2 px-3 rounded-lg transition-colors", routeActive('catalogo') ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800")}>Catálogo</button>
                 <button onClick={() => { goto('beneficios'); setMobileMenuOpen(false); }} className={cn("block w-full text-left py-2 px-3 rounded-lg transition-colors", routeActive('beneficios') ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800")}>Beneficios</button>
-                <button onClick={() => { goto('testimonios'); setMobileMenuOpen(false); }} className={cn("block w-full text-left py-2 px-3 rounded-lg transition-colors", routeActive('testimonios') ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800")}>Testimonios</button>
                 <button onClick={() => { goto('historia'); setMobileMenuOpen(false); }} className={cn("block w-full text-left py-2 px-3 rounded-lg transition-colors", routeActive('historia') ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-50 dark:hover:bg-zinc-800")}>Historia</button>
                 <div className="pt-3 border-t border-zinc-200 dark:border-zinc-700">
                   <Button href={whatsappLink("Hola, quiero más información de Luz de Nuit ✨")} size="md" className="w-full justify-center">Comprar por WhatsApp</Button>
@@ -133,7 +130,6 @@ export default function App() {
           <Route path="/catalogo" element={<CatalogoPage />} />
           <Route path="/catalogo/:slug" element={<ProductDetailPage />} />
           <Route path="/beneficios" element={<BeneficiosPage />} />
-          <Route path="/testimonios" element={<TestimoniosPage />} />
           <Route path="/historia" element={<HistoriaPage />} />
           <Route path="*" element={<InicioPage goto={(r) => goto(r as any)} />} />
         </Routes>
@@ -146,7 +142,6 @@ export default function App() {
           <div className="flex items-center gap-4 flex-wrap">
             <button onClick={() => goto('catalogo')} className="text-sm opacity-80 hover:opacity-100">Catálogo</button>
             <button onClick={() => goto('beneficios')} className="text-sm opacity-80 hover:opacity-100">Beneficios</button>
-            <button onClick={() => goto('testimonios')} className="text-sm opacity-80 hover:opacity-100">Testimonios</button>
             <button onClick={() => goto('historia')} className="text-sm opacity-80 hover:opacity-100">Historia</button>
           </div>
         </div>

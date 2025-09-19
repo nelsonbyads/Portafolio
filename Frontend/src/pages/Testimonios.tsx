@@ -1,4 +1,5 @@
 import Card from "../components/ui/Card";
+import Carousel from "../components/ui/Carousel";
 import "./testimonios.css";
 
 export default function TestimoniosPage() {
@@ -14,14 +15,14 @@ export default function TestimoniosPage() {
         <h2 className="text-2xl font-bold tracking-tight">Testimonios</h2>
         <p className="mt-2 text-sm opacity-80">Lo que dicen quienes ya encendieron su ritual</p>
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <Carousel itemClassName="md:!basis-1/2 lg:!basis-1/3">
         {items.map((t) => (
           <Card key={t.name} className="p-6">
             <p className="mb-3 text-sm opacity-90">"{t.text}"</p>
             <div className="text-sm font-semibold">{t.name}</div>
           </Card>
         ))}
-      </div>
+      </Carousel>
     </section>
   );
 }

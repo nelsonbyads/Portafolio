@@ -110,7 +110,7 @@ export default function CatalogoPage() {
                 </div>
               )}
             </div>
-            <div className="p-5 flex flex-col h-full flex-1 overflow-hidden">
+            <div className="relative p-5 flex flex-col h-full flex-1 overflow-hidden pb-16">
               <div className="mb-2 flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-lg font-semibold leading-tight">{p.name}</h3>
@@ -123,14 +123,14 @@ export default function CatalogoPage() {
                   </p>
                 </div>
               </div>
-              {/* El texto se contrae al pasar el mouse */}
-              <p className="mb-3 line-clamp-3 group-hover:line-clamp-2 md:group-hover:line-clamp-1 text-sm opacity-85 transition-[all] duration-200">{p.description}</p>
+              {/* Mantener altura estable para evitar saltos en acciones */}
+              <p className="mb-3 line-clamp-3 text-sm opacity-85">{p.description}</p>
               <div className="mb-3 flex flex-wrap gap-2">
                 {p.scentNotes.slice(0, 3).map((n) => (
                   <Badge key={n} tone="neutral">{n}</Badge>
                 ))}
               </div>
-              <div className="mt-auto pt-1 flex items-center justify-between">
+              <div className="absolute bottom-5 left-5 right-5 pt-1 flex items-center justify-between">
                 <Button href={whatsappLink(productToMessage(p))}>Comprar por WhatsApp</Button>
                 <Link to={`/catalogo/${p.slug}`} className="text-sm opacity-70 underline-offset-4 hover:underline">Detalles</Link>
               </div>
