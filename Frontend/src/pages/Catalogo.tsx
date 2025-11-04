@@ -1,11 +1,12 @@
-import { useMemo, useState, useEffect } from "react";
-import PRODUCTS from "../data/products";
+import { useMemo, useState, useEffect, useCallback } from "react";
+import { PRODUCTS } from "../data/products";
 import { formatCurrency, productToMessage, whatsappLink, ProductType } from "../lib/utils";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
 import Button from "../components/ui/Button";
 import { IconSearch } from "../components/icons";
 import { Link } from "react-router-dom";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
 import "./catalogo.css";
 
 export default function CatalogoPage() {
@@ -15,6 +16,7 @@ export default function CatalogoPage() {
   const [minPrice, setMinPrice] = useState<number | "">("");
   const [maxPrice, setMaxPrice] = useState<number | "">("");
   const [page, setPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const perPage = 6;
 
   const scents = useMemo(() => {
@@ -22,6 +24,10 @@ export default function CatalogoPage() {
     PRODUCTS.forEach((p) => p.scentNotes.forEach((n) => s.add(n)));
     return ["Todos", ...Array.from(s)];
   }, []);
+
+  // Debug: Verificar que los productos se cargan correctamente
+  console.log('Total de productos cargados:', PRODUCTS.length);
+  console.log('Productos:', PRODUCTS.map(p => p.name));
 
   const filtered = useMemo(() => {
     let data = PRODUCTS.slice();
@@ -45,10 +51,44 @@ export default function CatalogoPage() {
     return data;
   }, [query, typeFilter, scentFilter, minPrice, maxPrice]);
 
-  useEffect(() => { setPage(1); }, [query, typeFilter, scentFilter, minPrice, maxPrice]);
+  useEffect(() => { 
+    setPage(1); 
+    setIsLoadingMore(false);
+  }, [query, typeFilter, scentFilter, minPrice, maxPrice]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   const pageItems = filtered.slice(0, Math.min(page * perPage, filtered.length));
+  const hasMore = page < totalPages;
+
+  // Debug: Verificar la lógica de paginación
+  console.log('Productos filtrados:', filtered.length);
+  console.log('Página actual:', page);
+  console.log('Productos por página:', perPage);
+  console.log('Total de páginas:', totalPages);
+  console.log('Productos en página actual:', pageItems.length);
+  console.log('Hay más productos:', hasMore);
+
+  const loadMore = useCallback(async () => {
+    if (isLoadingMore || !hasMore) return;
+    
+    setIsLoadingMore(true);
+    
+    // Simular un pequeño delay para mejor UX
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    setPage(prev => prev + 1);
+    setIsLoadingMore(false);
+  }, [isLoadingMore, hasMore]);
+
+  const { lastElementRef } = useInfiniteScroll(loadMore, {
+    hasMore,
+    isLoading: isLoadingMore,
+    threshold: 0.1,
+    rootMargin: '100px'
+  });
+
+  // Debug: Verificar el estado del scroll infinito
+  console.log('Estado del scroll infinito:', { hasMore, isLoadingMore });
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10">
@@ -100,8 +140,12 @@ export default function CatalogoPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {pageItems.map((p) => (
-          <Card key={p.id} className="group overflow-hidden flex flex-col transition-shadow hover:shadow-md h-[420px] md:h-[460px]">
+        {pageItems.map((p, index) => (
+          <Card 
+            key={p.id} 
+            className="group overflow-hidden flex flex-col transition-shadow hover:shadow-md h-[420px] md:h-[460px]"
+            ref={index === pageItems.length - 1 ? lastElementRef : undefined}
+          >
             {/* Zona de imagen (se amplía al hover) */}
             <div className="product-image relative w-full overflow-hidden h-44 md:h-56 transition-[height] duration-300 ease-out group-hover:h-56 md:group-hover:h-64" style={{ ['--product-color' as any]: p.color || '#eee' }}>
               {p.promo && (
@@ -139,18 +183,25 @@ export default function CatalogoPage() {
         ))}
       </div>
 
+      {/* Indicador de carga para scroll infinito */}
       <div className="mt-8 flex items-center justify-center">
-        {page < totalPages ? (
-          <button
-            className="inline-flex h-11 items-center gap-2 rounded-2xl px-4 text-sm font-semibold text-white shadow-sm transition hover:shadow-md bg-brand-primary"
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-          >
-            Ver más
-          </button>
-        ) : (
-          <span className="text-sm opacity-60">No hay más productos</span>
-        )}
+        {isLoadingMore ? (
+          <div className="flex items-center gap-2 text-sm opacity-70">
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand-primary border-t-transparent"></div>
+            <span>Cargando más productos...</span>
+          </div>
+        ) : !hasMore && filtered.length > 0 ? (
+          <span className="text-sm opacity-60">Has visto todos los productos</span>
+        ) : null}
       </div>
+
+      {/* Mensaje cuando no hay productos */}
+      {filtered.length === 0 && (
+        <div className="mt-12 text-center">
+          <p className="text-lg opacity-60 mb-4">No se encontraron productos</p>
+          <p className="text-sm opacity-50">Intenta ajustar los filtros de búsqueda</p>
+        </div>
+      )}
     </section>
   );
 }

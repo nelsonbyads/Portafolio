@@ -3,7 +3,7 @@ import { whatsappLink, formatCurrency } from "../lib/utils";
 import Button from "../components/ui/Button";
 import Badge from "../components/ui/Badge";
 import Card from "../components/ui/Card";
-import PRODUCTS from "../data/products";
+import { PRODUCTS } from "../data/products";
 import Carousel from "../components/ui/Carousel";
 import "./inicio.css";
 import TestimoniosPage from "./Testimonios";

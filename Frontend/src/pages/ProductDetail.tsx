@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import PRODUCTS from "../data/products";
+import { PRODUCTS } from "../data/products";
 import { formatCurrency, productToMessage, whatsappLink } from "../lib/utils";
 import Card from "../components/ui/Card";
 import Badge from "../components/ui/Badge";
